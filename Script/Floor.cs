@@ -97,19 +97,37 @@ public class Floor : MonoBehaviour
                 break;
             case "Box":
                 Box box = other.gameObject.GetComponent<Box>();
-                if (box.OnThrow.Equals(false))
-                {
-                    box.Floor = this;
+                // if (box.OnThrow.Equals(false))
+                // {
+                    // box.Floor = this;
                     HasBox = true;
-                }
-                else
-                {
-                    Destroy(other.gameObject);
-                }
+                // }
+                // else
+                // {
+                //     Destroy(other.gameObject);
+                // }
                 
                 break;
             case "Player":
                 m_Speed = other.gameObject.GetComponent<HitFloor>().Speed * Time.deltaTime;
+                break;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "Ant":
+                
+                break;
+            case "Box":
+                Box box = other.gameObject.GetComponent<Box>();
+                // box.Floor = this;
+                HasBox = false;
+                
+                break;
+            case "Player":
                 break;
         }
     }

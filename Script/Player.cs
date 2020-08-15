@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
-        Throw();
+        // Throw();
     }
 
     void Move()
@@ -50,36 +50,36 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Throw()
-    {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo))
-            {
-                Debug.DrawLine(ray.origin, hitInfo.point, Color.green);
-                GameObject obj = hitInfo.collider.gameObject;
-                Debug.Log("Hit obj " + obj.name);
-                if (m_HandOnBox != null)
-                {
-                    m_HandOnBox.transform.parent = null;
-                    m_HandOnBox.GetComponent<Rigidbody>().WakeUp();
-                    var position = obj.transform.position;
-                    Vector3 direction = position - transform.position;
-                    direction.y = 0;
-                    //m_HandOnBox.transform.forward = direction;
-                    Box box = m_HandOnBox.GetComponent<Box>();
-                    box.OnThrow = true;
-                    box.Target = position;
-                    box.Target.y = 1;
-                    box.Floor = null;
-                    box.StartThrow = m_HandOnBox.transform.position;
-                    m_HandOnBox = null;
-                }
-            }
-        }
-    }
+    // void Throw()
+    // {
+    //     if (Input.GetKey(KeyCode.Mouse0))
+    //     {
+    //         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //         RaycastHit hitInfo;
+    //         if (Physics.Raycast(ray, out hitInfo))
+    //         {
+    //             Debug.DrawLine(ray.origin, hitInfo.point, Color.green);
+    //             GameObject obj = hitInfo.collider.gameObject;
+    //             Debug.Log("Hit obj " + obj.name);
+    //             if (m_HandOnBox != null)
+    //             {
+    //                 m_HandOnBox.transform.parent = null;
+    //                 m_HandOnBox.GetComponent<Rigidbody>().WakeUp();
+    //                 var position = obj.transform.position;
+    //                 Vector3 direction = position - transform.position;
+    //                 direction.y = 0;
+    //                 //m_HandOnBox.transform.forward = direction;
+    //                 Box box = m_HandOnBox.GetComponent<Box>();
+    //                 // box.OnThrow = true;
+    //                 // box.Target = position;
+    //                 // box.Target.y = 1;
+    //                 box.Floor = null;
+    //                 // box.StartThrow = m_HandOnBox.transform.position;
+    //                 m_HandOnBox = null;
+    //             }
+    //         }
+    //     }
+    // }
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag.Equals("Ant"))
@@ -96,14 +96,25 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (m_HandOnBox == null)
-                {
-                    m_HandOnBox = other.gameObject;
-                    m_HandOnBox.transform.parent = transform;
-                    m_HandOnBox.transform.localPosition = new Vector3(0, 1, 0);
-                    m_HandOnBox.GetComponent<Box>().Floor.HasBox = false;
-                    m_HandOnBox.GetComponent<Rigidbody>().Sleep();
-                }
+                Vector3 forcedir = other.gameObject.transform.position - transform.position;
+                // if (Mathf.Abs(forcedir.x) > Mathf.Abs(forcedir.z))
+                // {
+                //     forcedir.z = 0;
+                // }
+                // else
+                // {
+                //     forcedir.x = 0;
+                // }
+
+                other.gameObject.GetComponent<Box>().velocity = forcedir;
+                // if (m_HandOnBox == null)
+                // {
+                //     m_HandOnBox = other.gameObject;
+                //     m_HandOnBox.transform.parent = transform;
+                //     m_HandOnBox.transform.localPosition = new Vector3(0, 1, 0);
+                //     m_HandOnBox.GetComponent<Box>().Floor.HasBox = false;
+                //     m_HandOnBox.GetComponent<Rigidbody>().Sleep();
+                // }
             }
         }
     }

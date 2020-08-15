@@ -4841,11 +4841,11 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
-  m_VertexStreams: 00010304
+  m_VertexStreams: 000304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -4879,7 +4879,7 @@ Transform:
   m_GameObject: {fileID: 7914820907651486485}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
   m_Children:
   - {fileID: 3033567589878080898}
   - {fileID: 5732004357064516212}
@@ -4907,14 +4907,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7914820907651486485}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
-  m_AngularDrag: 100
+  m_AngularDrag: 0.2
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &5230389726169247206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4927,8 +4927,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843a4528e889c4844ad3b7beb8f99714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThrowTime: 1
-  OnThrow: 0
-  Target: {x: 0, y: 0, z: 0}
   Floor: {fileID: 0}
-  StartThrow: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  ForceCo: 10
