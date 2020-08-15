@@ -15,6 +15,8 @@ public class Floor : MonoBehaviour
 
     [Range(0,1)]public float Percent = 0.5f;
     public FloorType IntervalType = FloorType.Grey;
+
+    public bool HasBox = false;
     
     private float m_Speed;
     private MeshRenderer m_MeshRenderer;
@@ -85,7 +87,7 @@ public class Floor : MonoBehaviour
         m_MeshRenderer.SetPropertyBlock(m_PropertyBlock);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         //Debug.Log(other.gameObject.name + " entered " + gameObject.name + " : Speed " + other.GetComponent<HitFloor>().Speed);
         switch (other.gameObject.tag)
@@ -94,7 +96,17 @@ public class Floor : MonoBehaviour
                 m_Speed = other.gameObject.GetComponent<HitFloor>().Speed * Time.deltaTime;
                 break;
             case "Box":
-                /**/
+                Box box = other.gameObject.GetComponent<Box>();
+                if (box.OnThrow.Equals(false))
+                {
+                    box.Floor = this;
+                    HasBox = true;
+                }
+                else
+                {
+                    Destroy(other.gameObject);
+                }
+                
                 break;
             case "Player":
                 m_Speed = other.gameObject.GetComponent<HitFloor>().Speed * Time.deltaTime;

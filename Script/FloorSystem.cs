@@ -7,14 +7,15 @@ public class FloorSystem : MonoBehaviour
     public GameObject[] Blocks;
 
     private List<Floor> m_blockStates;
+    private List<GameObject> m_EmptyBlock;
 
     private int m_Top;
-
     private int m_Bottom;
     // Start is called before the first frame update
     void Start()
     {
         m_blockStates = new List<Floor>();
+        m_EmptyBlock = new List<GameObject>();
         /*Transform[] Allchild = GetComponentsInChildren<Transform>();
         foreach (var child in Allchild)
         {
@@ -55,4 +56,26 @@ public class FloorSystem : MonoBehaviour
         Debug.LogWarning("Game Ends, White " + m_Top + " and Black " + m_Bottom);
         Application.Quit();
     }
+
+    public GameObject GetRandomEmptyBlock()
+    {
+        m_EmptyBlock.Clear();
+        for (int i = 0; i < Blocks.Length; i++)
+        {
+            if (m_blockStates[i].HasBox == false)
+            {
+                m_EmptyBlock.Add(m_blockStates[i].gameObject);
+            }
+        }
+
+        int num = m_EmptyBlock.Count;
+        if (num <= 0)
+        {
+            return null;
+        }
+        int randomSerial = Random.Range(0, num);
+        return m_EmptyBlock[randomSerial];
+    }
+
+    
 }
