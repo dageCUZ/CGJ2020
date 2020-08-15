@@ -26,17 +26,18 @@ public class Ant : MonoBehaviour
         Move();
     }
 
+    //蚂蚁移动
     void Move()
     {
         float realSpeed = MoveSpeed * Time.deltaTime;
         var position = transform.position;
-        m_Direction = m_Player.position - position - new Vector3(0,0.4f,0);
+        m_Direction = m_Player.position - position;
         m_Direction = Vector3.Normalize(m_Direction);
-        transform.forward = m_Direction;
+        //transform.forward = m_Direction;
         m_Direction *= realSpeed;
         // transform.Translate(m_Direction);
         position += m_Direction;
-         transform.position = position;
+        transform.position = position;
     }
 
     private void OnDrawGizmos()
@@ -44,20 +45,18 @@ public class Ant : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + m_Direction * 1000);
     }
 
+    //击杀蚂蚁
     private void OnCollisionEnter(Collision other)
     {
         switch (other.gameObject.tag)
-        {
-            
+        {            
             case "Box":
                 Vector3 dir = other.gameObject.transform.position - transform.position;
-                if (dir.y > 0)
+                if (dir.y < 0)
                 {
                     Destroy(this.gameObject);
-                }
-                
-                break;
-            
+                }            
+                break;            
         }
     }
 }
